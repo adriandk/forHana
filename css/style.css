@@ -1,0 +1,236 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #ffeef8 0%, #f8d7da 50%, #e3c8e8 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+    position: relative;
+    z-index: 10;
+    padding: 50px;
+}
+
+.envelope {
+    position: relative;
+    width: 320px;
+    height: 200px;
+    margin: 0 auto 50px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 8px 16px rgba(255, 182, 193, 0.4));
+}
+
+.envelope:hover {
+    transform: scale(1.05) rotate(2deg);
+}
+
+/* Base envelope body - kotak utama */
+.envelope-body {
+    width: 100%;
+    height: 160px;
+    background: linear-gradient(45deg, #ffb6c1, #ffc0cb);
+    border: 3px solid #ff69b4;
+    border-radius: 8px;
+    position: relative;
+    z-index: 2;
+    box-shadow: 
+        inset 0 2px 8px rgba(255, 255, 255, 0.3),
+        0 4px 12px rgba(255, 182, 193, 0.3);
+}
+
+/* Front triangular flap - flap depan yang bisa dibuka KE ATAS */
+.envelope-flap {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 160px solid transparent;
+    border-right: 160px solid transparent;
+    border-top: 90px solid #ff69b4;
+    z-index: 4;
+    transform-origin: 0 0; /* Pivot point di bagian atas tengah */
+    transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 0 2px 8px rgba(255, 105, 180, 0.3);
+}
+
+/* Animasi flap terbuka KE ATAS dengan rotateX */
+.envelope.opened .envelope-flap {
+    transform: translateX(-50%) rotateX(-180deg); /* Kombinasi center dan rotate */
+}
+
+.letter {
+    position: absolute;
+    width: 350px; /* Diperbesar dari 280px */
+    height: 280px; /* Diperbesar dari 200px */
+    background: linear-gradient(135deg, #fff0f5, #fdf2f8);
+    top: 10px; /* Disesuaikan posisi */
+    left: -15px; /* Disesuaikan posisi agar center */
+    z-index: 1;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(255, 182, 193, 0.3);
+    transform: translateY(50px) scale(0.8);
+    opacity: 0;
+    transition: all 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border: 2px solid #ffb6c1;
+    overflow: hidden; /* Untuk memastikan content tidak keluar */
+}
+
+/* Surat keluar ke atas saat amplop dibuka */
+.envelope.opened .letter {
+    transform: translateY(-150px) scale(1); /* Keluar lebih tinggi */
+    opacity: 1;
+    z-index: 5;
+}
+
+.letter-content {
+    padding: 0; /* Remove padding untuk full content */
+    color: #8b5a83;
+    font-size: 14px;
+    line-height: 1.6;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Style untuk gambar/PDF content */
+.letter-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Style untuk PDF embed */
+.letter-pdf {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 10px;
+}
+
+/* Style untuk text content (jika masih mau pakai text) */
+.letter-text {
+    padding: 20px;
+    height: 100%;
+    overflow-y: auto;
+    text-align: left;
+}
+
+.letter-text h2 {
+    color: #d63384;
+    margin-bottom: 15px;
+    font-size: 18px;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    text-shadow: 1px 1px 2px rgba(255, 182, 193, 0.5);
+}
+
+.letter-text p {
+    margin-bottom: 10px;
+    font-size: 13px;
+}
+
+/* Cute border decoration untuk text content */
+.letter-text::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 2px dashed #ffb6c1;
+    border-radius: 10px;
+    opacity: 0.5;
+    z-index: -1;
+}
+
+.open-btn {
+    background: linear-gradient(45deg, #ff69b4, #ff1493, #da70d6);
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(255, 20, 147, 0.3);
+    font-family: 'Arial', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+.open-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(255, 20, 147, 0.4);
+    background: linear-gradient(45deg, #ff1493, #da70d6, #ff69b4);
+}
+
+.open-btn:active {
+    transform: translateY(-1px) scale(1.02);
+}
+
+/* Cute floating animation */
+@keyframes float {
+    0%, 100% { 
+        transform: translateY(0px) rotate(0deg); 
+    }
+    33% { 
+        transform: translateY(-8px) rotate(1deg); 
+    }
+    66% { 
+        transform: translateY(-4px) rotate(-1deg); 
+    }
+}
+
+.envelope {
+    animation: float 4s ease-in-out infinite;
+}
+
+.envelope.opened {
+    animation: none;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+    .envelope {
+        width: 280px;
+        height: 180px;
+    }
+    
+    .envelope-flap {
+        border-left: 140px solid transparent;
+        border-right: 140px solid transparent;
+        border-top: 80px solid #ff69b4;
+    }
+    
+    .letter {
+        width: 240px;
+        height: 180px;
+    }
+    
+    .container {
+        padding: 20px;
+    }
+}

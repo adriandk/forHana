@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amplop Surat</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="envelope" id="envelope">
+            <div class="envelope-top"></div>
+            <div class="envelope-body">
+                <div class="envelope-flap" id="flap"></div>
+            </div>
+            <div class="letter" id="letter">
+                <div class="letter-content">
+                    <!-- Option 1: Untuk menampilkan gambar -->
+                    <img src="images/invitation.jpg" alt="Undangan" class="letter-image" style="display: none;">
+                    
+                    <!-- Option 2: Untuk menampilkan PDF -->
+                    <embed src="documents/invitation.pdf" type="application/pdf" class="letter-pdf" style="display: none;">
+                    
+                    <!-- Option 3: Text content (default) -->
+                    <div class="letter-text">
+                        <h2>Surat Untuk Anda</h2>
+                        <p>Halo! Ini adalah surat yang tersembunyi di dalam amplop.</p>
+                        <p>Terima kasih telah membuka amplop ini.</p>
+                        <p>Semoga hari Anda menyenangkan!</p>
+                        <br>
+                        <p>Salam hangat,<br>Pengirim</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="open-btn" id="openBtn">Buka Amplop</button>
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
